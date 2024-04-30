@@ -1,0 +1,35 @@
+package com.blog.controller.back;
+
+
+import com.blog.dto.RegulatorPageQueryDTO;
+import com.blog.result.Result;
+import com.blog.service.RegulatorService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.blog.result.PageResult;
+
+@RestController
+@RequestMapping("/admin/regulator")
+@Slf4j
+@Api(tags = "后台管理员接口")
+public class RegulatorController {
+    @Autowired
+    private RegulatorService regulatorService;
+
+    /**
+     * 管理员分页查询
+     * @param regulatorPageQueryDTO
+     * @return
+     */
+    @GetMapping("/page")
+    @ApiOperation(value = "管理员分页查询")
+    // 这里我们前端是get请求，传递的是三个查询参数，通过 ?username=&page=&pageSize= 传递过来的
+    public Result<PageResult> pageQuery(RegulatorPageQueryDTO regulatorPageQueryDTO) {
+        log.info("管理员分页查询");
+        PageResult pageResult = regulatorService.pageQuery(regulatorPageQueryDTO);
+        return Result.success(pageResult);
+    }
+}

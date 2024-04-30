@@ -1,0 +1,11 @@
+这是一个前后端分离的个人博客
+前端 Vue3、Element Plus、md-editor-v3
+后端 Node.js、Koa、mysql、Seqlize、七牛云对象存储、阿里云轻量服务器部署
+博客前台仿照Hexo butterfly魔改的 演示地址：http://mrzym.top
+博客后台采用pure-admin进行二次开发 演示地址：http://mrzym.top/admin
+开源地址：https://gitee.com/mrzym
+前后台都在此账号的投稿里
+后台演示投稿：【vue3前后端分离个人博客 后台-哔哩哔哩】 https://b23.tv/djif6xK
+前台最新演示投稿：【vue3前后端分离个人博客 前台(最新演示，开发了新功能)-哔哩哔哩】 https://b23.tv/Dxgekvo
+博客讨论群：763111710
+主要用于技术交流，提升技术。有什么好的想法、技术前沿、或者是遇到看不懂的前端代码、难以解决的bug都可以提出来，也许就有人踩过坑。

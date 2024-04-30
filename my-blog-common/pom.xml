@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.blog</groupId>
+        <artifactId>my-blog</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>my-blog-common</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <!-- springMVC扩展消息转换器，添加日期的序列化、反序列化会用到 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-json</artifactId>
+        </dependency>
+        <!-- 下面四个都是minio实现文件上传下载所需要的jar包，实现访问用minio搭建的存储服务器。
+
+        jar包com.squareup.okhttp3，因为在io.minio中把这个jar包排除在外了（因为网上说版本不兼容），所以单独引入一个指定版本的。
+
+        jar包com.alibaba在minioUtil中用到了，所以需要导入。
+
+        jar包tomcat-embed-core，这个不用管理版本，直接写到my-blog-common的pom文件里就行。
+        因为它是属于spring的，spring会自己管理这个tomcat-embed-core的版本。
+        为什么引入tomcat-embed-core而不是servlet-api，因为tomcat-embed-core属于spring，我们可以直接在yml文件中配置文件上传下载的大小限制。
+        -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+        </dependency>
+        <!-- jwt校验，JwtUtil中需要用到下面这个jar包 -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+        </dependency>
+
+
+    </dependencies>
+
+</project>

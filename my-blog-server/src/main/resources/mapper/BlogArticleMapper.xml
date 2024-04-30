@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.mapper.BlogArticleMapper">
+
+    <!-- 主页分页查询 -->
+    <select id="blogHomeGetArticleList" resultType="com.blog.vo.ArticleListVO">
+        select ba.*, bc.category_name
+        from `blog_article` ba
+                 left join `blog_category` bc on ba.category_id = bc.id
+        limit #{current},#{size}
+    </select>
+
+
+    <select id="queryArticleListByTagId" resultType="com.blog.entity.BlogArticle">
+        select ba.*
+        from blog_article ba
+                 inner join (select bat.article_id from blog_article_tag bat where bat.tag_id = #{id}) temp
+                            on temp.article_id = ba.id
+        order by id
+        limit #{current},#{size}
+    </select>
+
+    <select id="blogTimelineGetArticleList" resultType="com.blog.entity.BlogTimelineArticle">
+        /* 这里的SQL语句语法是比较进阶的 */
+        select DATE_FORMAT(`created_at`, '%Y') as created_year, ba.id, ba.article_title, ba.article_cover, ba.created_at
+        from blog_article ba
+        order by `created_at` desc
+        limit #{current},#{size};
+    </select>
+
+    <!--    <select id="queryByYear" resultType="com.blog.entity.BlogArticle">
+            select * from (select * from blog_article order by created_at desc limit #{current},#{size}) as `ba` where `created_at` like concat(#{createAtYear}, '%')
+        </select>-->
+
+    <!--查询单个-->
+    <select id="queryById" resultType="com.blog.vo.FrontArticleDetailVO">
+        select ba.*, bc.category_name
+        from `blog_article` ba left join `blog_category` bc on ba.category_id = bc.id
+        where ba.id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryByConditions" resultType="com.blog.entity.BlogArticle">
+        select *
+        from `blog_article`
+        <where>
+            <if test="blogArticle != null">
+                <if test="blogArticle.id != null">
+                    and `id` = #{blogArticle.id}
+                </if>
+                <if test="blogArticle.articleTitle != null and blogArticle.articleTitle != ''">
+                    and `article_title` = #{blogArticle.articleTitle}
+                </if>
+                <if test="blogArticle.authorId != null">
+                    and `author_id` = #{blogArticle.authorId}
+                </if>
+                <if test="blogArticle.categoryId != null">
+                    and `category_id` = #{blogArticle.categoryId}
+                </if>
+                <if test="blogArticle.articleContent != null and blogArticle.articleContent != ''">
+                    and `article_content` = #{blogArticle.articleContent}
+                </if>
+                <if test="blogArticle.articleCover != null and blogArticle.articleCover != ''">
+                    and `article_cover` = #{blogArticle.articleCover}
+                </if>
+                <if test="blogArticle.isTop != null">
+                    and `is_top` = #{blogArticle.isTop}
+                </if>
+                <if test="blogArticle.status != null">
+                    and `status` = #{blogArticle.status}
+                </if>
+                <if test="blogArticle.type != null">
+                    and `type` = #{blogArticle.type}
+                </if>
+                <if test="blogArticle.originUrl != null and blogArticle.originUrl != ''">
+                    and `origin_url` = #{blogArticle.originUrl}
+                </if>
+                <if test="blogArticle.createdAt != null">
+                    and `created_at` = #{blogArticle.createdAt}
+                </if>
+                <if test="blogArticle.updatedAt != null">
+                    and `updated_at` = #{blogArticle.updatedAt}
+                </if>
+                <if test="blogArticle.viewTimes != null">
+                    and `view_times` = #{blogArticle.viewTimes}
+                </if>
+                <if test="blogArticle.articleDescription != null and blogArticle.articleDescription != ''">
+                    and `article_description` = #{blogArticle.articleDescription}
+                </if>
+                <if test="blogArticle.thumbsUpTimes != null">
+                    and `thumbs_up_times` = #{blogArticle.thumbsUpTimes}
+                </if>
+                <if test="blogArticle.readingDuration != null">
+                    and `reading_duration` = #{blogArticle.areadingDuration}
+                </if>
+                <if test="blogArticle.order != null">
+                    and `order` = #{blogArticle.order}
+                </if>
+            </if>
+
+        </where>
+        <if test="sort != null">
+            order by `updated_at` desc
+        </if>
+        <if test="pageLimit != null">
+            limit #{pageLimit.offset}, #{pageLimit.pageSize}
+        </if>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from `blog_article`
+        <where>
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="articleTitle != null and articleTitle != ''">
+                and `article_title` = #{articleTitle}
+            </if>
+            <if test="authorId != null">
+                and `author_id` = #{authorId}
+            </if>
+            <if test="categoryId != null">
+                and `category_id` = #{categoryId}
+            </if>
+            <if test="articleContent != null and articleContent != ''">
+                and `article_content` = #{articleContent}
+            </if>
+            <if test="articleCover != null and articleCover != ''">
+                and `article_cover` = #{articleCover}
+            </if>
+            <if test="isTop != null">
+                and `is_top` = #{isTop}
+            </if>
+            <if test="status != null">
+                and `status` = #{status}
+            </if>
+            <if test="type != null">
+                and `type` = #{type}
+            </if>
+            <if test="originUrl != null and originUrl != ''">
+                and `origin_url` = #{originUrl}
+            </if>
+            <if test="createdAt != null">
+                and `created_at` = #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and `updated_at` = #{updatedAt}
+            </if>
+            <if test="viewTimes != null">
+                and `view_times` = #{viewTimes}
+            </if>
+            <if test="articleDescription != null and articleDescription != ''">
+                and `article_description` = #{articleDescription}
+            </if>
+            <if test="thumbsUpTimes != null">
+                and `thumbs_up_times` = #{thumbsUpTimes}
+            </if>
+            <if test="readingDuration != null">
+                and `reading_duration` = #{readingDuration}
+            </if>
+            <if test="order != null">
+                and `order` = #{order}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryArticlesByCategoryIds" resultType="com.blog.entity.BlogArticle">
+        select * from blog_article where `category_id` in (
+            <foreach collection="categoryIdList" item="categoryId" separator=",">
+                #{categoryId}
+            </foreach>
+            )
+    </select>
+
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into `blog_article`(`article_title`, `author_id`, `category_id`, `article_content`, `article_cover`,
+                                   `is_top`, `status`, `type`, `origin_url`, `created_at`, `updated_at`, `view_times`,
+                                   `article_description`, `thumbs_up_times`, `reading_duration`, `order`)
+        values (#{articleTitle}, #{authorId}, #{categoryId}, #{articleContent}, #{articleCover}, #{isTop}, #{status},
+                #{type}, #{originUrl}, #{createdAt}, #{updatedAt}, #{viewTimes}, #{articleDescription},
+                #{thumbsUpTimes}, #{readingDuration}, #{order})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into `blog_article`(`article_title`, `author_id`, `category_id`, `article_content`, `article_cover`,
+        `is_top`, `status`, `type`, `origin_url`, `created_at`, `updated_at`, `view_times`, `article_description`,
+        `thumbs_up_times`, `reading_duration`, `order`)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.articleTitle}, #{entity.authorId}, #{entity.categoryId}, #{entity.articleContent},
+            #{entity.articleCover}, #{entity.isTop}, #{entity.status}, #{entity.type}, #{entity.originUrl},
+            #{entity.createdAt}, #{entity.updatedAt}, #{entity.viewTimes}, #{entity.articleDescription},
+            #{entity.thumbsUpTimes}, #{entity.readingDuration}, #{entity.order})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into `blog_article`(`article_title`, `author_id`, `category_id`, `article_content`, `article_cover`,
+        `is_top`, `status`, `type`, `origin_url`, `created_at`, `updated_at`, `view_times`, `article_description`,
+        `thumbs_up_times`, `reading_duration`, `order`)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.articleTitle}, #{entity.authorId}, #{entity.categoryId}, #{entity.articleContent},
+            #{entity.articleCover}, #{entity.isTop}, #{entity.status}, #{entity.type}, #{entity.originUrl},
+            #{entity.createdAt}, #{entity.updatedAt}, #{entity.viewTimes}, #{entity.articleDescription},
+            #{entity.thumbsUpTimes}, #{entity.readingDuration}, #{entity.order})
+        </foreach>
+        on duplicate key update
+        `article_title` = values(article_title),
+        `author_id` = values(author_id),
+        `category_id` = values(category_id),
+        `article_content` = values(article_content),
+        `article_cover` = values(article_cover),
+        `is_top` = values(is_top),
+        `status` = values(status),
+        `type` = values(type),
+        `origin_url` = values(origin_url),
+        `created_at` = values(created_at),
+        `updated_at` = values(updated_at),
+        `view_times` = values(view_times),
+        `article_description` = values(article_description),
+        `thumbs_up_times` = values(thumbs_up_times),
+        `reading_duration` = values(reading_duration),
+        `order` = values(order)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update `blog_article`
+        <set>
+            <if test="articleTitle != null and articleTitle != ''">
+                `article_title` = #{articleTitle},
+            </if>
+            <if test="authorId != null">
+                `author_id` = #{authorId},
+            </if>
+            <if test="categoryId != null">
+                `category_id` = #{categoryId},
+            </if>
+            <if test="articleContent != null and articleContent != ''">
+                `article_content` = #{articleContent},
+            </if>
+            <if test="articleCover != null and articleCover != ''">
+                `article_cover` = #{articleCover},
+            </if>
+            <if test="isTop != null">
+                `is_top` = #{isTop},
+            </if>
+            <if test="status != null">
+                `status` = #{status},
+            </if>
+            <if test="type != null">
+                `type` = #{type},
+            </if>
+            <if test="originUrl != null and originUrl != ''">
+                `origin_url` = #{originUrl},
+            </if>
+            <if test="createdAt != null">
+                `created_at` = #{createdAt},
+            </if>
+            <if test="updatedAt != null">
+                `updated_at` = #{updatedAt},
+            </if>
+            <if test="viewTimes != null">
+                `view_times` = #{viewTimes},
+            </if>
+            <if test="articleDescription != null and articleDescription != ''">
+                `article_description` = #{articleDescription},
+            </if>
+            <if test="thumbsUpTimes != null">
+                `thumbs_up_times` = #{thumbsUpTimes},
+            </if>
+            <if test="readingDuration != null">
+                `reading_duration` = #{readingDuration},
+            </if>
+            <if test="order != null">
+                `order` = #{order},
+            </if>
+        </set>
+        where `id` = #{id}
+    </update>
+
+    <update id="draftByIds">
+        update `blog_article`
+        <set>
+            `status` = 2
+        </set>
+        where `id` in (
+        <foreach collection="articleIdList" item="articleId" separator=",">
+            #{articleId}
+        </foreach>
+        )
+    </update>
+    <update id="recoverByIds">
+        update `blog_article`
+        <set>
+            `status` = 1
+        </set>
+        where `id` in (
+        <foreach collection="articleIdList" item="articleId" separator=",">
+            #{articleId}
+        </foreach>
+        )
+    </update>
+
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from `blog_article`
+        where `id` = #{id}
+    </delete>
+    <delete id="deleteByIds">
+        delete from `blog_article` where `id` in (
+        <foreach collection="articleIdList" item="articleId" separator=",">
+            #{articleId}
+        </foreach>
+        )
+    </delete>
+
+</mapper>
+

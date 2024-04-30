@@ -1,0 +1,12 @@
+package com.blog.dto;
+
+import org.springframework.data.domain.Sort;
+
+import java.util.List;
+
+// 这个地方处理的很巧妙，夸奖，既然父类构造函数具有protected修饰符，无法直接在另一个类中调用，那么就创建一个这个类的子类，在子类中调用父类的protected构造方法
+public class SortDTO extends Sort {
+    protected SortDTO(List<Order> orders) {
+        super(orders);
+    }
+}

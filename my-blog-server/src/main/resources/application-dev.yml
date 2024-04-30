@@ -1,0 +1,17 @@
+blog:
+#  host: localhost  # 生产环境
+  host: 47.109.101.72  # 开发环境
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    host: ${blog.host}
+    port: 3306
+    database: online_blog
+    username: online_blog
+    password: Root_1234
+  # 切记下面这些配置是为了和minio建立连接，Java后端在代码层面和minion交互
+  minio:
+    endpoint: http://${blog.host}:9000 # Minio服务所在地址，可视化界面端口是9999
+    bucketName: blog-images # 存储桶名称
+    accessKey: 7xzCfQHSZYdACOS3Q6mI # 访问的key
+    secretKey: BZWh2gjVtbQbtfQ7cBcRX8qLjbE0mLYNXOAHUh8J # 访问的秘钥

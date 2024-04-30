@@ -1,0 +1,11 @@
+package com.blog.dto;
+
+import lombok.Data;
+
+@Data
+public class RegulatorPageQueryDTO {
+    private String username;
+    private Integer page;
+    private Integer pageSize;
+
+}

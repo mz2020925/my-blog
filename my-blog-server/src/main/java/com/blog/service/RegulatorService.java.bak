@@ -1,0 +1,9 @@
+package com.blog.service;
+
+import com.blog.dto.RegulatorPageQueryDTO;
+import com.blog.result.PageResult;
+
+
+public interface RegulatorService {
+    PageResult pageQuery(RegulatorPageQueryDTO regulatorPageQueryDTO);
+}

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.mapper.BlogConfigMapper">
+
+
+    <!--************************* 代码生成 *************************-->
+    <!--代码生成-查询单个-->
+    <select id="queryById" resultType="com.blog.entity.BlogConfig">
+        select *
+
+        from `blog_config`
+        where `id` = #{id}
+    </select>
+
+    <!--代码生成-查询指定行数据-->
+    <select id="queryAllByLimit" resultType="com.blog.entity.BlogConfig">
+        select *
+
+        from `blog_config`
+        <where>
+            <if test="blogConfig.id != null">
+                and `id` = #{blogConfig.id}
+            </if>
+            <if test="blogConfig.blogName != null and blogConfig.blogName != ''">
+                and `blog_name` = #{blogConfig.blogName}
+            </if>
+            <if test="blogConfig.blogAvatar != null and blogConfig.blogAvatar != ''">
+                and `blog_avatar` = #{blogConfig.blogAvatar}
+            </if>
+            <if test="blogConfig.avatarBg != null and blogConfig.avatarBg != ''">
+                and `avatar_bg` = #{blogConfig.avatarBg}
+            </if>
+            <if test="blogConfig.personalSay != null and blogConfig.personalSay != ''">
+                and `personal_say` = #{blogConfig.personalSay}
+            </if>
+            <if test="blogConfig.blogNotice != null and blogConfig.blogNotice != ''">
+                and `blog_notice` = #{blogConfig.blogNotice}
+            </if>
+            <if test="blogConfig.qqLink != null and blogConfig.qqLink != ''">
+                and `qq_link` = #{blogConfig.qqLink}
+            </if>
+            <if test="blogConfig.weChatLink != null and blogConfig.weChatLink != ''">
+                and `we_chat_link` = #{blogConfig.weChatLink}
+            </if>
+            <if test="blogConfig.githubLink != null and blogConfig.githubLink != ''">
+                and `github_link` = #{blogConfig.githubLink}
+            </if>
+            <if test="blogConfig.gitEeLink != null and blogConfig.gitEeLink != ''">
+                and `git_ee_link` = #{blogConfig.gitEeLink}
+            </if>
+            <if test="blogConfig.bilibiliLink != null and blogConfig.bilibiliLink != ''">
+                and `bilibili_link` = #{blogConfig.bilibiliLink}
+            </if>
+            <if test="blogConfig.viewTime != null">
+                and `view_time` = #{blogConfig.viewTime}
+            </if>
+            <if test="blogConfig.createdAt != null">
+                and `created_at` = #{blogConfig.createdAt}
+            </if>
+            <if test="blogConfig.updatedAt != null">
+                and `updated_at` = #{blogConfig.updatedAt}
+            </if>
+            <if test="blogConfig.weChatGroup != null and blogConfig.weChatGroup != ''">
+                and `we_chat_group` = #{blogConfig.weChatGroup}
+            </if>
+            <if test="blogConfig.qqGroup != null and blogConfig.qqGroup != ''">
+                and `qq_group` = #{blogConfig.qqGroup}
+            </if>
+            <if test="blogConfig.weChatPay != null and blogConfig.weChatPay != ''">
+                and `we_chat_pay` = #{blogConfig.weChatPay}
+            </if>
+            <if test="blogConfig.aliPay != null and blogConfig.aliPay != ''">
+                and `ali_pay` = #{blogConfig.aliPay}
+            </if>
+        </where>
+        <if test="sort != null">
+            order by `updated_at` desc
+        </if>
+        <if test="pageLimit != null">
+            limit #{pageLimit.offset}, #{pageLimit.pageSize}
+        </if>
+    </select>
+
+    <!--代码生成-统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from `blog_config`
+        <where>
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="blogName != null and blogName != ''">
+                and `blog_name` = #{blogName}
+            </if>
+            <if test="blogAvatar != null and blogAvatar != ''">
+                and `blog_avatar` = #{blogAvatar}
+            </if>
+            <if test="avatarBg != null and avatarBg != ''">
+                and `avatar_bg` = #{avatarBg}
+            </if>
+            <if test="personalSay != null and personalSay != ''">
+                and `personal_say` = #{personalSay}
+            </if>
+            <if test="blogNotice != null and blogNotice != ''">
+                and `blog_notice` = #{blogNotice}
+            </if>
+            <if test="qqLink != null and qqLink != ''">
+                and `qq_link` = #{qqLink}
+            </if>
+            <if test="weChatLink != null and weChatLink != ''">
+                and `we_chat_link` = #{weChatLink}
+            </if>
+            <if test="githubLink != null and githubLink != ''">
+                and `github_link` = #{githubLink}
+            </if>
+            <if test="gitEeLink != null and gitEeLink != ''">
+                and `git_ee_link` = #{gitEeLink}
+            </if>
+            <if test="bilibiliLink != null and bilibiliLink != ''">
+                and `bilibili_link` = #{bilibiliLink}
+            </if>
+            <if test="viewTime != null">
+                and `view_time` = #{viewTime}
+            </if>
+            <if test="createdAt != null">
+                and `created_at` = #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and `updated_at` = #{updatedAt}
+            </if>
+            <if test="weChatGroup != null and weChatGroup != ''">
+                and `we_chat_group` = #{weChatGroup}
+            </if>
+            <if test="qqGroup != null and qqGroup != ''">
+                and `qq_group` = #{qqGroup}
+            </if>
+            <if test="weChatPay != null and weChatPay != ''">
+                and `we_chat_pay` = #{weChatPay}
+            </if>
+            <if test="aliPay != null and aliPay != ''">
+                and `ali_pay` = #{aliPay}
+            </if>
+        </where>
+    </select>
+
+    <!--代码生成-新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into `blog_config`(`blog_name`, `blog_avatar`, `avatar_bg`, `personal_say`, `blog_notice`, `qq_link`,
+                                  `we_chat_link`, `github_link`, `git_ee_link`, `bilibili_link`, `view_time`,
+                                  `created_at`, `updated_at`, `we_chat_group`, `qq_group`, `we_chat_pay`, `ali_pay`)
+        values (#{blogName}, #{blogAvatar}, #{avatarBg}, #{personalSay}, #{blogNotice}, #{qqLink}, #{weChatLink},
+                #{githubLink}, #{gitEeLink}, #{bilibiliLink}, #{viewTime}, #{createdAt}, #{updatedAt}, #{weChatGroup},
+                #{qqGroup}, #{weChatPay}, #{aliPay})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into `blog_config`(`blog_name`, `blog_avatar`, `avatar_bg`, `personal_say`, `blog_notice`, `qq_link`,
+        `we_chat_link`, `github_link`, `git_ee_link`, `bilibili_link`, `view_time`, `created_at`, `updated_at`,
+        `we_chat_group`, `qq_group`, `we_chat_pay`, `ali_pay`)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.blogName}, #{entity.blogAvatar}, #{entity.avatarBg}, #{entity.personalSay}, #{entity.blogNotice},
+            #{entity.qqLink}, #{entity.weChatLink}, #{entity.githubLink}, #{entity.gitEeLink}, #{entity.bilibiliLink},
+            #{entity.viewTime}, #{entity.createdAt}, #{entity.updatedAt}, #{entity.weChatGroup}, #{entity.qqGroup},
+            #{entity.weChatPay}, #{entity.aliPay})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into `blog_config`(`blog_name`, `blog_avatar`, `avatar_bg`, `personal_say`, `blog_notice`, `qq_link`,
+        `we_chat_link`, `github_link`, `git_ee_link`, `bilibili_link`, `view_time`, `created_at`, `updated_at`,
+        `we_chat_group`, `qq_group`, `we_chat_pay`, `ali_pay`)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.blogName}, #{entity.blogAvatar}, #{entity.avatarBg}, #{entity.personalSay}, #{entity.blogNotice},
+            #{entity.qqLink}, #{entity.weChatLink}, #{entity.githubLink}, #{entity.gitEeLink}, #{entity.bilibiliLink},
+            #{entity.viewTime}, #{entity.createdAt}, #{entity.updatedAt}, #{entity.weChatGroup}, #{entity.qqGroup},
+            #{entity.weChatPay}, #{entity.aliPay})
+        </foreach>
+        on duplicate key update
+        `blog_name` = values(blog_name),
+        `blog_avatar` = values(blog_avatar),
+        `avatar_bg` = values(avatar_bg),
+        `personal_say` = values(personal_say),
+        `blog_notice` = values(blog_notice),
+        `qq_link` = values(qq_link),
+        `we_chat_link` = values(we_chat_link),
+        `github_link` = values(github_link),
+        `git_ee_link` = values(git_ee_link),
+        `bilibili_link` = values(bilibili_link),
+        `view_time` = values(view_time),
+        `created_at` = values(created_at),
+        `updated_at` = values(updated_at),
+        `we_chat_group` = values(we_chat_group),
+        `qq_group` = values(qq_group),
+        `we_chat_pay` = values(we_chat_pay),
+        `ali_pay` = values(ali_pay)
+    </insert>
+
+    <!--代码生成-通过主键修改数据-->
+    <update id="update">
+        update `blog_config`
+        <set>
+            <if test="blogName != null and blogName != ''">
+                `blog_name` = #{blogName},
+            </if>
+            <if test="blogAvatar != null and blogAvatar != ''">
+                `blog_avatar` = #{blogAvatar},
+            </if>
+            <if test="avatarBg != null and avatarBg != ''">
+                `avatar_bg` = #{avatarBg},
+            </if>
+            <if test="personalSay != null and personalSay != ''">
+                `personal_say` = #{personalSay},
+            </if>
+            <if test="blogNotice != null and blogNotice != ''">
+                `blog_notice` = #{blogNotice},
+            </if>
+            <if test="qqLink != null and qqLink != ''">
+                `qq_link` = #{qqLink},
+            </if>
+            <if test="weChatLink != null and weChatLink != ''">
+                `we_chat_link` = #{weChatLink},
+            </if>
+            <if test="githubLink != null and githubLink != ''">
+                `github_link` = #{githubLink},
+            </if>
+            <if test="gitEeLink != null and gitEeLink != ''">
+                `git_ee_link` = #{gitEeLink},
+            </if>
+            <if test="bilibiliLink != null and bilibiliLink != ''">
+                `bilibili_link` = #{bilibiliLink},
+            </if>
+            <if test="viewTime != null">
+                `view_time` = #{viewTime},
+            </if>
+            <if test="createdAt != null">
+                `created_at` = #{createdAt},
+            </if>
+            <if test="updatedAt != null">
+                `updated_at` = #{updatedAt},
+            </if>
+            <if test="weChatGroup != null and weChatGroup != ''">
+                `we_chat_group` = #{weChatGroup},
+            </if>
+            <if test="qqGroup != null and qqGroup != ''">
+                `qq_group` = #{qqGroup},
+            </if>
+            <if test="weChatPay != null and weChatPay != ''">
+                `we_chat_pay` = #{weChatPay},
+            </if>
+            <if test="aliPay != null and aliPay != ''">
+                `ali_pay` = #{aliPay},
+            </if>
+        </set>
+        where `id` = #{id}
+    </update>
+
+    <!--代码生成-通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from `blog_config`
+        where `id` = #{id}
+    </delete>
+
+</mapper>
+

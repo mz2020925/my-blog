@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.mapper.BlogTagMapper">
+
+    <delete id="deleteBatch">
+        delete from `blog_tag` where `id` in (
+            <foreach collection="tagIdList" item="tagId" separator=",">
+                #{tagId}
+            </foreach>
+        )
+    </delete>
+
+    <!-- 查询单个 -->
+    <select id="queryById" resultType="com.blog.entity.BlogTag">
+        select *
+        from `blog_tag`
+        where `id` = #{id}
+    </select>
+
+    <!-- 查询指定行数据 -->
+    <select id="queryAllByLimit" resultType="com.blog.entity.BlogTag">
+        select *
+        from `blog_tag`
+        <where>
+            <if test="blogTag.id != null">
+                and `id` = #{blogTag.id}
+            </if>
+            <if test="blogTag.tagName != null and blogTag.tagName != ''">
+                and `tag_name` like concat('%',#{blogTag.tagName},'%')
+            </if>
+            <if test="blogTag.createdAt != null">
+                and `created_at` = #{blogTag.createdAt}
+            </if>
+            <if test="blogTag.updatedAt != null">
+                and `updated_at` = #{blogTag.updatedAt}
+            </if>
+        </where>
+        <if test="sort">
+            order by `updated_at` desc
+        </if>
+        <if test="pageLimit != null">
+            limit #{pageLimit.offset}, #{pageLimit.pageSize}
+        </if>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from `blog_tag`
+        <where>
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="tagName != null and tagName != ''">
+                and `tag_name` = #{tagName}
+            </if>
+            <if test="createdAt != null">
+                and `created_at` = #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and `updated_at` = #{updatedAt}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into `blog_tag`(`tag_name`, `created_at`, `updated_at`)
+        values (#{tagName}, #{createdAt}, #{updatedAt})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into `blog_tag`(`tag_name`, `created_at`, `updated_at`)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.tagName}, #{entity.createdAt}, #{entity.updatedAt})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into `blog_tag`(`tag_name`, `created_at`, `updated_at`)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.tagName}, #{entity.createdAt}, #{entity.updatedAt})
+        </foreach>
+        on duplicate key update
+        `tag_name` = values(tag_name),
+        `created_at` = values(created_at),
+        `updated_at` = values(updated_at)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update `blog_tag`
+        <set>
+            <if test="tagName != null and tagName != ''">
+                `tag_name` = #{tagName},
+            </if>
+            <if test="createdAt != null">
+                `created_at` = #{createdAt},
+            </if>
+            <if test="updatedAt != null">
+                `updated_at` = #{updatedAt},
+            </if>
+        </set>
+        where `id` = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from `blog_tag`
+        where `id` = #{id}
+    </delete>
+
+
+</mapper>
+

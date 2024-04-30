@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>my-blog</artifactId>
+        <groupId>com.blog</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>my-blog-server</artifactId>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <docker.image.prefix>zmz</docker.image.prefix>
+    </properties>
+
+    <dependencies>
+        <!--包含其他两个子模块-->
+        <dependency>
+            <groupId>com.blog</groupId>
+            <artifactId>my-blog-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.blog</groupId>
+            <artifactId>my-blog-pojo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- @RestController 和 @RequestMapping("/admin/regulator") -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- log.info()相关，@Data、@AllArgsConstructor相关 -->
+        <!-- @Sl4j 和 @Data 和 @AllArgsConstructor 和 @NoArgsConstructor-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- @Api(tag="")、@@ApiOperation(value = "员工登录接口")相关 -->
+        <!-- 接口的文档在线自动生成，降低后端开发人员编写接口文档的负担：@Api(tag = "") -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- mysql数据库相关 -->
+        <!--        <dependency>-->
+        <!--            <groupId>com.baomidou</groupId>-->
+        <!--            <artifactId>mybatis-plus-boot-starter</artifactId>-->
+        <!--        </dependency>-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- 分页查询。此处使用mybatis的分页插件PageHelper来简化分页代码的开发。底层基于 mybatis 的拦截器实现 -->
+        <!-- TODO 用不明白，这个好像需要配置，但是原来的苍穹外卖并没有配置这个pagrhelper-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- MyBatis自动代码生成，分页查询中需要org.springframework.data.domain.Page，所以需要下面这个包 -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+        </dependency>
+
+        <!-- test.java.com.blog包下的测试类的注解@SpringBootTest 相关 -->
+        <!-- 这个包含有org.junit.jupiter.api.Test，他又包含@Test注解 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- 补充sql语句的公共字段（插入时间、更新时间），需要用到面向切面编程@Aspect，需要用到下面两个包-->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
+
+    </dependencies>
+    <!--下面的<plugin>是为了解决打包之后 java -jar XXXXXXXX.jar 报错无法找到主属性的问题-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!--
+    <build>
+        <plugins>
+            &lt;!&ndash;镜像启动插件&ndash;&gt;
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            &lt;!&ndash; 配置部署到远程docker中 &ndash;&gt;
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+
+                <configuration>
+                    <dockerHost>http://47.109.101.72:2375</dockerHost>
+                    &lt;!&ndash;指定生成的镜像名：前缀+项目名&ndash;&gt;
+                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    &lt;!&ndash;dockerFile的位置&ndash;&gt;
+                    <dockerDirectory>src/main/docker</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    -->
+</project>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <version>2.7.3</version>
+    </parent>
+
+    <groupId>com.blog</groupId>
+    <artifactId>my-blog</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <!--如果没有将packing 指定为pom ，那么子模块之间将无法正常的进行依赖传递
+    pom的意思是项目里没有java代码，也不执行任何代码，只是为了聚合工程或传递依赖用的。
+    所以并不会寻找配置文件，若想配置文件生效，改为jar。maven 默认的打包类型为 jar，
+    在项目聚合的时候，需要显式的将 父项目的 packing 指定为 pom，然后再指定所属的子模块。-->
+
+    <modules>
+        <module>my-blog-common</module>
+        <module>my-blog-pojo</module>
+        <module>my-blog-server</module>
+    </modules>
+
+    <properties>
+        <!--Slf4j日志打印-->
+        <lombok>1.18.20</lombok>
+        <!--Swagger接口测试页面生成-->
+        <knife4j>3.0.2</knife4j>
+        <!--MySQL数据库-->
+        <!--<mybatis-plus>3.4.1</mybatis-plus>-->
+        <mysql>8.0.18</mysql>
+        <druid>1.2.1</druid>
+        <pagehelper>1.3.0</pagehelper>
+        <spring.data.commons>2.7.10</spring.data.commons><!--easy代码生成-->
+
+        <!--minio存储服务器-->
+        <io.minio>8.4.2</io.minio>
+        <okhttp3>4.9.0</okhttp3>
+        <servlet.api>2.5</servlet.api>
+        <fastjson>1.2.76</fastjson>
+
+        <!--jwt校验-->
+        <jjwt>0.9.1</jjwt>
+        <!--面向切面编程-->
+        <aspectj>1.9.4</aspectj>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- log.info()相关，@Data、@AllArgsConstructor相关 -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok}</version>
+            </dependency>
+            <!-- @Api(tag="")、@@ApiOperation(value = "员工登录接口")相关 -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j}</version>
+            </dependency>
+            <!-- mysql数据库相关 -->
+            <!--<dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus}</version>
+            </dependency>-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid}</version>
+            </dependency>
+            <dependency><!-- 分页查询 -->
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper}</version>
+            </dependency>
+            <!-- easyCode自动Mybatis代码生成，分页查询中需要org.springframework.data.domain.Page，所以需要下面这个包 -->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-commons</artifactId>
+                <version>${spring.data.commons}</version>
+            </dependency>
+            <!-- 下面三个都是minio实现文件上传下载所需要的jar包，实现访问用minio搭建的存储服务器。
+            另外还有一个jar包：tomcat-embed-core，这个不用管理版本，直接写到my-blog-common的pom文件里就行。
+            因为它是属于spring的，spring会自己管理这个tomcat-embed-core的版本 -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${io.minio}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.squareup.okhttp3</groupId>
+                        <artifactId>okhttp</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp3}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson}</version>
+            </dependency>
+
+            <!-- jwt校验，JwtUtil中需要用到下面这个jar包 -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt}</version>
+            </dependency>
+
+            <!-- 补充sql语句的公共字段（插入时间、更新时间），需要用到面向切面编程@Aspect，需要用到下面两个包 -->
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspectj}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+</project>

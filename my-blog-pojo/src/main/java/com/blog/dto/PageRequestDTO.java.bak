@@ -1,0 +1,23 @@
+package com.blog.dto;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+
+import java.util.ArrayList;
+
+// 这个地方处理的很巧妙，夸奖，既然父类构造函数具有protected修饰符，无法直接在另一个类中调用，那么就创建一个这个类的子类，在子类中调用父类的protected构造方法
+public class PageRequestDTO extends PageRequest {
+    /**
+     * Creates a new {@link PageRequest} with sort parameters applied.
+     *
+     * @param page zero-based page index, must not be negative.
+     * @param size the size of the page to be returned, must be greater than 0.
+     * @param sort must not be {@literal null}, use {@link Sort#unsorted()} instead.
+     */
+    public PageRequestDTO(Integer page, Integer size) {
+        // super(page, size, new SortDTO(new ArrayList<Sort.Order>(Collections.singletonList(new Sort.Order(Sort.Direction.DESC, "order")))));
+        super(page, size, new SortDTO(new ArrayList<Sort.Order>()));
+    }
+
+
+}

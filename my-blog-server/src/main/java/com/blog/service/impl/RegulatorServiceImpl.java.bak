@@ -1,0 +1,27 @@
+package com.blog.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.blog.dto.RegulatorPageQueryDTO;
+import com.blog.entity.Regulator;
+import com.blog.mapper.RegulatorMapper;
+import com.blog.result.PageResult;
+import com.blog.service.RegulatorService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class RegulatorServiceImpl extends ServiceImpl<RegulatorMapper, Regulator> implements RegulatorService {
+    @Autowired
+    private RegulatorMapper regulatorMapper;
+
+    @Override
+    public PageResult pageQuery(RegulatorPageQueryDTO regulatorPageQueryDTO) {
+        PageHelper.startPage(regulatorPageQueryDTO.getPage(), regulatorPageQueryDTO.getPageSize());
+
+        Page<Regulator> page = regulatorMapper.pageQuery(regulatorPageQueryDTO);
+        // return new PageResult(page.getTotal(), page.getResult());
+        return new PageResult();
+    }
+}

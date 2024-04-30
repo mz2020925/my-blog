@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.mapper.BlogAdminMapper">
+
+
+    <!--************************* 代码生成 *************************-->
+    <!--代码生成-查询单个-->
+    <select id="queryAllByLimit" resultType="com.blog.entity.BlogAdmin">
+        select *
+        from `blog_admin`
+        <where>
+            <if test="blogAdmin.id != null">
+                and `id` = #{blogAdmin.id}
+            </if>
+            <if test="blogAdmin.username != null and blogAdmin.username != ''">
+                and `username` = #{blogAdmin.username}
+            </if>
+            <if test="blogAdmin.password != null and blogAdmin.password != ''">
+                and `password` = #{blogAdmin.password}
+            </if>
+            <if test="blogAdmin.role != null">
+                and `role` = #{blogAdmin.role}
+            </if>
+            <if test="blogAdmin.nickName != null and blogAdmin.nickName != ''">
+                and `nick_name` = #{blogAdmin.nickName}
+            </if>
+            <if test="blogAdmin.avatar != null and blogAdmin.avatar != ''">
+                and `avatar` = #{blogAdmin.avatar}
+            </if>
+            <if test="blogAdmin.createdAt != null">
+                and `created_at` = #{blogAdmin.createdAt}
+            </if>
+            <if test="blogAdmin.updatedAt != null">
+                and `updated_at` = #{blogAdmin.updatedAt}
+            </if>
+            <if test="blogAdmin.qq != null and blogAdmin.qq != ''">
+                and `qq` = #{blogAdmin.qq}
+            </if>
+            <if test="blogAdmin.ip != null and blogAdmin.ip != ''">
+                and `ip` = #{blogAdmin.ip}
+            </if>
+        </where>
+        <if test="pageable != null">
+            limit #{pageable.offset}, #{pageable.pageSize}
+        </if>
+    </select>
+
+    <!--代码生成-查询指定行数据-->
+    <select id="queryById" resultType="com.blog.entity.BlogAdmin">
+        select *
+        from `blog_admin`
+        where `id` = #{id}
+    </select>
+
+    <!--代码生成-统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from `blog_admin`
+        <where>
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and `username` = #{username}
+            </if>
+            <if test="password != null and password != ''">
+                and `password` = #{password}
+            </if>
+            <if test="role != null">
+                and `role` = #{role}
+            </if>
+            <if test="nickName != null and nickName != ''">
+                and `nick_name` = #{nickName}
+            </if>
+            <if test="avatar != null and avatar != ''">
+                and `avatar` = #{avatar}
+            </if>
+            <if test="createdAt != null">
+                and `created_at` = #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and `updated_at` = #{updatedAt}
+            </if>
+            <if test="qq != null and qq != ''">
+                and `qq` = #{qq}
+            </if>
+            <if test="ip != null and ip != ''">
+                and `ip` = #{ip}
+            </if>
+        </where>
+    </select>
+
+    <!--代码生成-新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into `blog_admin`(`username`, `password`, `role`, `nick_name`, `avatar`, `created_at`, `updated_at`, `qq`,
+                                `ip`)
+        values (#{username}, #{password}, #{role}, #{nickName}, #{avatar}, #{createdAt}, #{updatedAt}, #{qq}, #{ip})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into `blog_admin`(`username`, `password`, `role`, `nick_name`, `avatar`, `created_at`, `updated_at`, `qq`,
+        `ip`)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.username}, #{entity.password}, #{entity.role}, #{entity.nickName}, #{entity.avatar},
+            #{entity.createdAt}, #{entity.updatedAt}, #{entity.qq}, #{entity.ip})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into `blog_admin`(`username`, `password`, `role`, `nick_name`, `avatar`, `created_at`, `updated_at`, `qq`,
+        `ip`)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.username}, #{entity.password}, #{entity.role}, #{entity.nickName}, #{entity.avatar},
+            #{entity.createdAt}, #{entity.updatedAt}, #{entity.qq}, #{entity.ip})
+        </foreach>
+        on duplicate key update
+        `username` = values(username),
+        `password` = values(password),
+        `role` = values(role),
+        `nick_name` = values(nick_name),
+        `avatar` = values(avatar),
+        `created_at` = values(created_at),
+        `updated_at` = values(updated_at),
+        `qq` = values(qq),
+        `ip` = values(ip)
+    </insert>
+
+    <!--代码生成-通过主键修改数据-->
+    <update id="update">
+        update `blog_admin`
+        <set>
+            <if test="username != null and username != ''">
+                `username` = #{username},
+            </if>
+            <if test="password != null and password != ''">
+                `password` = #{password},
+            </if>
+            <if test="role != null">
+                `role` = #{role},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                `nick_name` = #{nickName},
+            </if>
+            <if test="avatar != null and avatar != ''">
+                `avatar` = #{avatar},
+            </if>
+            <if test="createdAt != null">
+                `created_at` = #{createdAt},
+            </if>
+            <if test="updatedAt != null">
+                `updated_at` = #{updatedAt},
+            </if>
+            <if test="qq != null and qq != ''">
+                `qq` = #{qq},
+            </if>
+            <if test="ip != null and ip != ''">
+                `ip` = #{ip},
+            </if>
+        </set>
+        where `id` = #{id}
+    </update>
+
+    <!--代码生成-通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from `blog_admin`
+        where `id` = #{id}
+    </delete>
+
+</mapper>
+

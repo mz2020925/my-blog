@@ -1,0 +1,15 @@
+package com.blog.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.blog.dto.RegulatorPageQueryDTO;
+import com.blog.entity.Regulator;
+import com.blog.result.PageResult;
+import com.github.pagehelper.Page;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+@Mapper
+public interface RegulatorMapper extends BaseMapper<Regulator> {
+    Page<Regulator> pageQuery(RegulatorPageQueryDTO regulatorPageQueryDTO);
+}

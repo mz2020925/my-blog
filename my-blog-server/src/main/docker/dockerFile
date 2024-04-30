@@ -1,0 +1,25 @@
+# 指定基础镜像，即底层镜像
+FROM java:8
+# 维护者信息，可以没有
+MAINTAINER zmz <3091279505@qq.com>
+
+# 在linux命令前面加上RUN，就可以实现运行linux指令
+# RUN
+
+# 复制文件夹ADD/COPY
+ADD
+
+# 设置当前工作目录
+# WORKDIR
+
+# 设置卷，挂载主机目录
+# VOLUME
+
+# 指定对外端口
+EXPOSE 8080
+
+# 容器启动后要干的事
+CMD ["java","-version"]
+ENTRYPOINT ["java","-jar","my-blog-1.0-SNAPSHOT.jar"]
+
+

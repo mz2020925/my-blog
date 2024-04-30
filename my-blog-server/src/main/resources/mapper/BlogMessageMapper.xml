@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.mapper.BlogMessageMapper">
+
+
+    <!--************************* 代码生成 *************************-->
+    <!--代码生成-查询单个-->
+    <select id="queryById" resultType="com.blog.entity.BlogMessage">
+        select *
+
+        from `blog_message`
+        where `id` = #{id}
+    </select>
+
+    <!--代码生成-查询指定行数据-->
+    <select id="queryAllByLimit" resultType="com.blog.entity.BlogMessage">
+        select *
+
+        from `blog_message`
+        <where>
+            <if test="blogMessage.id != null">
+                and `id` = #{blogMessage.id}
+            </if>
+            <if test="blogMessage.tag != null and tag != ''">
+                and `tag` = #{blogMessage.tag}
+            </if>
+            <if test="blogMessage.message != null and message != ''">
+                and `message` = #{blogMessage.message}
+            </if>
+            <if test="blogMessage.color != null and color != ''">
+                and `color` = #{blogMessage.color}
+            </if>
+            <if test="blogMessage.fontSize != null">
+                and `font_size` = #{blogMessage.fontSize}
+            </if>
+            <if test="blogMessage.bgColor != null and bgColor != ''">
+                and `bg_color` = #{blogMessage.bgColor}
+            </if>
+            <if test="blogMessage.bgUrl != null and bgUrl != ''">
+                and `bg_url` = #{blogMessage.bgUrl}
+            </if>
+            <if test="blogMessage.userId != null">
+                and `user_id` = #{blogMessage.userId}
+            </if>
+            <if test="blogMessage.likeTimes != null">
+                and `like_times` = #{blogMessage.likeTimes}
+            </if>
+            <if test="blogMessage.createdAt != null">
+                and `created_at` = #{blogMessage.createdAt}
+            </if>
+            <if test="blogMessage.updatedAt != null">
+                and `updated_at` = #{blogMessage.updatedAt}
+            </if>
+            <if test="blogMessage.fontWeight != null">
+                and `font_weight` = #{blogMessage.fontWeight}
+            </if>
+            <if test="blogMessage.nickName != null and nickName != ''">
+                and `nick_name` = #{blogMessage.nickName}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--代码生成-统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from `blog_message`
+        <where>
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="tag != null and tag != ''">
+                and `tag` = #{tag}
+            </if>
+            <if test="message != null and message != ''">
+                and `message` = #{message}
+            </if>
+            <if test="color != null and color != ''">
+                and `color` = #{color}
+            </if>
+            <if test="fontSize != null">
+                and `font_size` = #{fontSize}
+            </if>
+            <if test="bgColor != null and bgColor != ''">
+                and `bg_color` = #{bgColor}
+            </if>
+            <if test="bgUrl != null and bgUrl != ''">
+                and `bg_url` = #{bgUrl}
+            </if>
+            <if test="userId != null">
+                and `user_id` = #{userId}
+            </if>
+            <if test="likeTimes != null">
+                and `like_times` = #{likeTimes}
+            </if>
+            <if test="createdAt != null">
+                and `created_at` = #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and `updated_at` = #{updatedAt}
+            </if>
+            <if test="fontWeight != null">
+                and `font_weight` = #{fontWeight}
+            </if>
+            <if test="nickName != null and nickName != ''">
+                and `nick_name` = #{nickName}
+            </if>
+        </where>
+    </select>
+
+    <!--代码生成-新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into `blog_message`(`tag`, `message`, `color`, `font_size`, `bg_color`, `bg_url`, `user_id`,
+                                   `like_times`, `created_at`, `updated_at`, `font_weight`, `nick_name`)
+        values (#{tag}, #{message}, #{color}, #{fontSize}, #{bgColor}, #{bgUrl}, #{userId}, #{likeTimes}, #{createdAt},
+                #{updatedAt}, #{fontWeight}, #{nickName})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into `blog_message`(`tag`, `message`, `color`, `font_size`, `bg_color`, `bg_url`, `user_id`,
+        `like_times`, `created_at`, `updated_at`, `font_weight`, `nick_name`)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.tag}, #{entity.message}, #{entity.color}, #{entity.fontSize}, #{entity.bgColor}, #{entity.bgUrl},
+            #{entity.userId}, #{entity.likeTimes}, #{entity.createdAt}, #{entity.updatedAt}, #{entity.fontWeight},
+            #{entity.nickName})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into `blog_message`(`tag`, `message`, `color`, `font_size`, `bg_color`, `bg_url`, `user_id`,
+        `like_times`, `created_at`, `updated_at`, `font_weight`, `nick_name`)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.tag}, #{entity.message}, #{entity.color}, #{entity.fontSize}, #{entity.bgColor}, #{entity.bgUrl},
+            #{entity.userId}, #{entity.likeTimes}, #{entity.createdAt}, #{entity.updatedAt}, #{entity.fontWeight},
+            #{entity.nickName})
+        </foreach>
+        on duplicate key update
+        `tag` = values(tag),
+        `message` = values(message),
+        `color` = values(color),
+        `font_size` = values(font_size),
+        `bg_color` = values(bg_color),
+        `bg_url` = values(bg_url),
+        `user_id` = values(user_id),
+        `like_times` = values(like_times),
+        `created_at` = values(created_at),
+        `updated_at` = values(updated_at),
+        `font_weight` = values(font_weight),
+        `nick_name` = values(nick_name)
+    </insert>
+
+    <!--代码生成-通过主键修改数据-->
+    <update id="update">
+        update `blog_message`
+        <set>
+            <if test="tag != null and tag != ''">
+                `tag` = #{tag},
+            </if>
+            <if test="message != null and message != ''">
+                `message` = #{message},
+            </if>
+            <if test="color != null and color != ''">
+                `color` = #{color},
+            </if>
+            <if test="fontSize != null">
+                `font_size` = #{fontSize},
+            </if>
+            <if test="bgColor != null and bgColor != ''">
+                `bg_color` = #{bgColor},
+            </if>
+            <if test="bgUrl != null and bgUrl != ''">
+                `bg_url` = #{bgUrl},
+            </if>
+            <if test="userId != null">
+                `user_id` = #{userId},
+            </if>
+            <if test="likeTimes != null">
+                `like_times` = #{likeTimes},
+            </if>
+            <if test="createdAt != null">
+                `created_at` = #{createdAt},
+            </if>
+            <if test="updatedAt != null">
+                `updated_at` = #{updatedAt},
+            </if>
+            <if test="fontWeight != null">
+                `font_weight` = #{fontWeight},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                `nick_name` = #{nickName},
+            </if>
+        </set>
+        where `id` = #{id}
+    </update>
+
+    <!--代码生成-通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from `blog_message`
+        where `id` = #{id}
+    </delete>
+
+</mapper>
+

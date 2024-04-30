@@ -1,0 +1,56 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  datasource:
+    druid:
+      driver-class-name: ${blog.datasource.driver-class-name}
+      url: jdbc:mysql://${blog.datasource.host}:${blog.datasource.port}/${blog.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${blog.datasource.username}
+      password: ${blog.datasource.password}
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
+
+mybatis:
+  # mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.blog.entity
+  configuration:
+    # 开启驼峰命名
+    map-underscore-to-camel-case: true
+
+#mybatis-plus:
+##  configuration:
+##    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  global-config:
+#    banner: off  # 关闭mybatisplus启动图标
+#    db-config:
+#      id-type: auto  # id开启自增
+
+logging:  # 日志打印
+  level:
+    com:
+      blog:
+        mapper: debug
+        service: info
+        controller: info
+
+
+blog:
+  # 配置存储服务器
+  minio:
+    endpoint: ${blog.minio.endpoint}
+    bucketName: ${blog.minio.bucketName}
+    accessKey: ${blog.minio.accessKey}
+    secretKey: ${blog.minio.secretKey}
+  jwt:
+    # 配置管理端
+    admin-secret-key: admin_secret_key  # 设置jwt签名加密时使用的秘钥
+    admin-ttl: 86400000  # 设置jwt过期时间,单位ms，时间一周
+    admin-token-name: Authorization  # 设置前端传递过来的令牌名称
