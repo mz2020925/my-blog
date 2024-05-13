@@ -114,7 +114,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
         for (BlogTimelineArticle item : blogTimelineArticles) {
             // 求出年份，作为key
             String year = item.getCreatedYear();
-            // map[ {year, TimelineVO{year, articleList(BlogTimelineArticle)}}, ]
+            // map[ {year, FrontTimelineVO{year, articleList(BlogTimelineArticle)}}, ]
             if (!map.containsKey(year)) {
                 FrontTimelineVO frontTimelineVO = new FrontTimelineVO(year, new ArrayList<BlogTimelineArticle>() {{
                     add(item);
@@ -124,10 +124,10 @@ public class BlogArticleServiceImpl implements BlogArticleService {
                 map.get(year).getArticleList().add(item);
             }
         }
-        System.out.println(map.values());
+        // System.out.println(map.values());
 
         List<FrontTimelineVO> result = new ArrayList<>(map.values());
-        System.out.println(result);
+        // System.out.println(result);
 
         // 文章总数
         Long count = blogArticleMapper.count(null);

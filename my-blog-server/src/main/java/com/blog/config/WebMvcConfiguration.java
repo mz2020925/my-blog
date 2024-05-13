@@ -40,6 +40,10 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         // 添加了两个拦截器，这两个拦截器会拦截不同请求url的请求
         registry.addInterceptor(jwtTokenAdminInterceptor)
                 .addPathPatterns("/admin/**")
+                .addPathPatterns("/article/**")
+                .addPathPatterns("/category/**")
+                .addPathPatterns("/file/**")
+                .addPathPatterns("/tag/**")
                 .excludePathPatterns("/admin/login")  // 不拦截这个Controller方法
                 .excludePathPatterns("/admin/register");  // 不拦截这个Controller方法
         // registry.addInterceptor(jwtTokenUserInterceptor)
